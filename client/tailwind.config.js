@@ -7,10 +7,10 @@ export default {
   theme: {
     colors: {
       'text': '#f7fef1',
-      'background': '#020500',
-      'primary': '#0e7a81',
-      'secondary': '#140320',
-      'accent': '#d92417',
+      'background': '#000000',
+      'primary': '#1B1914',
+      'secondary': '#211E19',
+      'accent': '#F9A70E',
     },
     extend: {},
   },

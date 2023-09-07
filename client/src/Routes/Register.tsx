@@ -1,7 +1,11 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from './../../utils/firebase'
+import { trpc } from '../trpc'
+import { redirect } from 'react-router-dom'
 const Register = () => {
+    document.title = 'Chat - Register'
     const provider = new GoogleAuthProvider()
+    const createUser = trpc.user.post.useMutation()
     provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     return (
         <main className="max-h-screen h-screen bg-secondary flex items-center justify-center">
@@ -13,7 +17,15 @@ const Register = () => {
                         try {
                             const res = await signInWithPopup(auth, provider)
                             if (!res) return alert('We could sign up you try again!')
-                            
+                            const { user: { displayName, email, uid, photoURL } } = res
+                            createUser.mutate({ name: displayName, email, uid, picture: photoURL }, {
+                                onSuccess: () => {
+                                    redirect('/chat')
+                                },
+                                onError: (data) => {
+                                    alert(data)
+                                }
+                            })
                         } catch (e) {
                             alert(e)
                         }

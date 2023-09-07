@@ -1,3 +1,6 @@
-import app from "./app";
+import server from "./app";
+import { connectDB } from "./db";
 
-app.listen(3000)
+connectDB();
+server.listen(3000)
+console.log('Server listen on port 3000')
